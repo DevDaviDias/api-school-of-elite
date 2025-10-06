@@ -1,18 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs';
-import serverless from 'serverless-http';
+import data from './data.json' assert { type: 'json' };
 
 const app = express();
-
-const rawData = fs.readFileSync('./data.json');
-const data = JSON.parse(rawData);
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
-// Rotas
 app.get('/', (req, res) => {
-  res.json(data);
+  res.json({ message: 'API School of Elite funcionando!' });
 });
 
 app.get('/personagem', (req, res) => {
@@ -28,5 +24,6 @@ app.get('/personagem/:mbti', (req, res) => {
   }
 });
 
-// Exporta como função serverless
-export const handler = serverless(app);
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
