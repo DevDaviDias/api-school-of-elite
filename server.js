@@ -1,19 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs';
 import data from './data.json' assert { type: 'json' };
 
-
 const app = express();
-const PORT = 3000;
-
-const rawData = fs.readFileSync('./data.json');
-const data = JSON.parse(rawData);
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send(data);
+  res.json(data);
 });
 
 app.get('/personagem', (req, res) => {
@@ -21,7 +16,7 @@ app.get('/personagem', (req, res) => {
 });
 
 app.get('/personagem/:mbti', (req, res) => {
-  const mbti = req.params.mbti.toLocaleUpperCase();
+  const mbti = req.params.mbti.toUpperCase();
   if (data[mbti]) {
     res.json(data[mbti]);
   } else {
@@ -30,5 +25,5 @@ app.get('/personagem/:mbti', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
