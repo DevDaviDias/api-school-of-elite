@@ -12,7 +12,12 @@ const rawData = fs.readFileSync('./data.json');
 const data = JSON.parse(rawData);
 
 app.get('/', (req, res) => {
-  res.send('API Escola da Elite - online ✅');
+  res.send(`
+    API Escola da Elite - online ✅ <br>
+    Endpoints disponíveis: <br>
+    <a href="/personagem">/personagem</a> - Todos os personagens <br>
+    /personagem/:mbti - Personagens por MBTI
+  `);
 });
 
 app.get('/personagem', (req, res) => {
