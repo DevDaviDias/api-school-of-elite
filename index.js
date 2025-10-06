@@ -1,14 +1,18 @@
 import express from 'express';
 import cors from 'cors';
-import data from './data.json' assert { type: 'json' };
+import fs from 'fs';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
+// Lê e converte o JSON manualmente
+const rawData = fs.readFileSync('./data.json');
+const data = JSON.parse(rawData);
+
 app.get('/', (req, res) => {
-  res.json({ message: 'API School of Elite funcionando!' });
+  res.send('API Escola da Elite - online ✅');
 });
 
 app.get('/personagem', (req, res) => {
@@ -27,3 +31,4 @@ app.get('/personagem/:mbti', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
