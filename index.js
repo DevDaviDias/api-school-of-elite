@@ -1,36 +1,36 @@
 import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname((__filename));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
-// Lê e converte o JSON manualmente
-const rawData = fs.readFileSync('./data.json');
-const data = JSON.parse(rawData);
+app.use(express.static(path.join(__dirname,'/public')));
 
-app.get('/', (req, res) => {
-  res.send(`
-    API Escola da Elite - online ✅ <br>
-    Endpoints disponíveis: <br>
-    <a href="/personagem">/personagem</a> - Todos os personagens <br>
-    /personagem/:mbti - Personagens por MBTI
-  `);
-});
+
+// Lê e converte o JSON manualmente
+const dataPath = path.join(__dirname, "data.json");
+const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
+
+
 
 app.get('/personagem', (req, res) => {
   res.json(data);
 });
 
+
 app.get('/personagem/:mbti', (req, res) => {
   const mbti = req.params.mbti.toUpperCase();
-  if (data[mbti]) {
-    res.json(data[mbti]);
-  } else {
-    res.status(404).json({ error: 'Tipo MBTI não encontrado' });
-  }
+  data[mbti]
+   ? res.json(data[mbti])
+  : res.status(404).json({ error: 'tipo MBTI não encontrado' });      
 });
 
 app.listen(PORT, () => {
