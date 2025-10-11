@@ -3,11 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>API School of Elite: Personagens</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-     <h1>School of Elite: Personagens</h1>
+     <h1>API School of Elite: Personagens</h1>
+      <div class="copy-container">
+    <input 
+      id="apiLink" 
+      type="text" 
+      value="https://api-school-of-elite.onrender.com/personagem" 
+      readonly
+    >
+    <button id="copyButton">Copiar</button>
+    <span id="copyMessage">Copiado!</span>
+  </div>
+
   <div class="cards-container" id="cards-container"></div>
   <script src="./script.js"></script>
 </body>

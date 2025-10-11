@@ -26,3 +26,23 @@ async function fetchPersonagens() {
 }
 
 fetchPersonagens();
+
+document.getElementById('copyButton').addEventListener('click', () => {
+  const input = document.getElementById('apiLink');
+  const message = document.getElementById('copyMessage');
+  const button = document.getElementById('copyButton');
+
+  navigator.clipboard.writeText(input.value)
+    .then(() => {
+      message.style.display = 'none';
+      button.textContent = 'Copiado!';
+      button.style.backgroundColor = '#28a745';
+
+      setTimeout(() => {
+        message.style.display = 'none';
+        button.textContent = 'Copiar';
+        button.style.backgroundColor = '#007bff';
+      }, 2000);
+    })
+    .catch(err => console.error('Erro ao copiar: ', err));
+});
